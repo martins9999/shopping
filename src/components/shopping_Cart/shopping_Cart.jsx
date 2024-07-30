@@ -1,7 +1,7 @@
 //===================================================================================//
 import {
-        CONTAINER_S_C, DESCRIPTION_S_C, ITEM_S_C,
-        LIST_ITEMS_S_C, NO_PRODUCT_IN_S_C, SUMMARY_S_C
+        CONTAINER_SHOPP, CONTENT_SHOPP, DESCRIPTION_PRODUCT_SHOPP, LIST_OF_ITEMS_SHOPP,
+        NO_PRODUCT_IN_SHOPP, SHOPP_ORDER_SUMMARY, SHOPP_PRODUCT_CONTAINER
 } from "./style_Shopping_Cart";
 //===================================================================================//
 import { useContext } from "react";
@@ -9,14 +9,15 @@ import { UseContext } from "../../context/context";
 import { BsCartX } from "react-icons/bs";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdAdd, MdRemove } from "react-icons/md";
-import { ScreenPrint } from "../screen_Print/screen_Print";
 import { FaCreditCard } from "react-icons/fa";
 import { GiConfirmed } from "react-icons/gi";
+import { LuMenu } from "react-icons/lu";
+import { FaMoneyBills, FaPix } from "react-icons/fa6";
 
 export const ShoppingCart = () => {
     const { shoppingCart, adicionarItem, removerItem, emptyCart, formatCurrency, limparCarrinho, qttItemsShop,
         installmentCounter,installmentValue,setInstallmentValue,totalWithInterest,setTotalWithInterest,
-        setInstallmentCounter, openShoppingCart, shopCartScreenPrint, setShopCartScreenPrint
+        setInstallmentCounter, openShoppingCart, contentDocument, handlePrint, buttonOffPrint, setButtonOffPrint
     } = useContext(UseContext);
 
     const amount = shoppingCart.reduce((acc, it) =>
@@ -133,83 +134,105 @@ export const ShoppingCart = () => {
    
     return (
         <>
-            {shopCartScreenPrint ?
-            <CONTAINER_S_C display={openShoppingCart ? 'flex' : 'none'} >
+            <CONTAINER_SHOPP display={openShoppingCart ? 'flex' : 'none'} >
                 {emptyCart ? 
                 <>
-                    <LIST_ITEMS_S_C display={openShoppingCart ? 'flex' : 'none'} >
-                        {
-                            shoppingCart.map((item) => (
-                            <ITEM_S_C key={item.newId}>
-                                <img alt="" src={item.productShopp.productInfo.imag}  />
-                                <DESCRIPTION_S_C>
-                                    <section><div>{item.productShopp.productInfo.title}</div></section>
-                                    <section>{item.newId} <div>/</div> {item.newCode}</section>
-                                    <section>Preço da Unidade: <div>{formatCurrency(item.newValue * 1)}</div></section>
-                                    <section>
-                                        <span>
-                                            Total: 
-                                            <div>{item.quantity}</div>
-                                            {item.quantity > 1 ? ' Unidades ' : ' Unidade '}
-                                            <div>{formatCurrency(item.quantity * item.newValue)}</div>
-                                        </span>
+                    <CONTENT_SHOPP ref={contentDocument} className="content">
+                        <LIST_OF_ITEMS_SHOPP display={openShoppingCart ? 'flex' : 'none'} >
+                            {
+                                shoppingCart.map((item) => (
+                                <SHOPP_PRODUCT_CONTAINER key={item.newId}>
+                                    <img alt="" src={item.productShopp.productInfo.imag}  />
+                                    <DESCRIPTION_PRODUCT_SHOPP>
+                                        <section><div>{item.productShopp.productInfo.title}</div></section>
+                                        <section>{item.newId} <div>/</div> {item.newCode}</section>
+                                        <section>Preço da Unidade: <div>{formatCurrency(item.newValue * 1)}</div></section>
                                         <section>
-                                            <MdRemove onClick={() => removerItem(item.newId, item.productShopp.productInfo.title) }/>
-                                            <MdAdd onClick={() => adicionarItem(item.productShopp.productInfo.title, item.newId, shoppingCart) }/>
+                                            <span>
+                                                Total: 
+                                                <div>{item.quantity}</div>
+                                                {item.quantity > 1 ? ' Unidades ' : ' Unidade '}
+                                                <div>{formatCurrency(item.quantity * item.newValue)}</div>
+                                            </span>
+                                            {buttonOffPrint ?
+                                                <section>
+                                                    <MdRemove onClick={() => removerItem(item.newId, item.productShopp.productInfo.title) }/>
+                                                    <MdAdd onClick={() => adicionarItem(item.productShopp.productInfo.title, item.newId, shoppingCart) }/>
+                                                </section>
+                                                :''
+                                            }
                                         </section>
+                                        <section>
+                                            <div>
+                                                Medida: {
+                                                    item.productShopp.productInfo.measure_1 ?? undefined ?
+                                                    item.newMeasure
+                                                    :
+                                                    item.productShopp.productInfo.line_2
+                                                }
+                                            </div>{
+                                                item.productShopp.productInfo.color_1 ?? undefined ?
+                                                <>
+                                                    <div>Cor:</div>
+                                                    <img alt="" src={item.newColor} />
+                                                </>  : ''}
+                                        </section>
+                                    </DESCRIPTION_PRODUCT_SHOPP>
+                                </SHOPP_PRODUCT_CONTAINER>
+                                ))
+                            }
+                            
+                            <SHOPP_ORDER_SUMMARY display={openShoppingCart ? 'flex' : 'none'}> 
+                                <section> Total: {qttItemsShop} Produtos </section>
+                                <section>
+                                    <section style={{color:'#00468c'}}>
+                                        <FaMoneyBills /> À Vista { formatCurrency(amount) }
                                     </section>
-                                    <section><div>Medida: {item.newMeasure}</div> {item.productShopp.productInfo.color_1 ?? undefined ? <><div>Cor:</div><img alt="" src={item.newColor} /></>  : ''}</section>
-                                </DESCRIPTION_S_C>
-                            </ITEM_S_C>
-                            ))
-                        }
-                        
-                    </LIST_ITEMS_S_C>
-                
-                
-                    <SUMMARY_S_C display={openShoppingCart ? 'flex' : 'none'}> 
-                        <section> Total: {qttItemsShop} Produtos </section>
-                        <section>À Vista { formatCurrency(amount) }<section style={{color:"#009F46"}}> no Pix { formatCurrency(valueInPix) }</section></section>
-                        <section  style={{color:'#FF2329'}}>
-                                {installmentCounter > 1 ?
+                                    <section style={{color:"#009F46"}}>
+                                        <FaPix /> no Pix { formatCurrency(valueInPix) }
+                                    </section>
+                                </section>
+                                <section  style={{color:'#FF2329'}}>
+                                        {installmentCounter > 1 ?
+                                            <>
+                                            <FaCreditCard />E Parcelado { formatCurrency(totalWithInterest) } Em {installmentCounter} x { formatCurrency(installmentValue) }
+                                            </>
+                                            :''
+                                        }
+                                </section>
+                                <b>Consultar valor do frete ao enviar pedido</b>
+                                {buttonOffPrint ?
                                     <>
-                                    <FaCreditCard /> { formatCurrency(totalWithInterest) } Em {installmentCounter} x { formatCurrency(installmentValue) }
+                                        <section>
+                                            {installmentCounter > 2 ?
+                                                <>
+                                                    <button onClick={()=> menos() }><MdRemove /></button>
+                                                </>
+                                                : ''
+                                            }
+                                            {installmentCounter > 1 ?
+                                                <button onClick={()=> mais() }><MdAdd /></button>
+                                                :
+                                                <button onClick={()=> mais() }><FaCreditCard /></button>
+                                            }
+                                        </section>
+                                        <section>
+                                            <button onClick={()=> limparCarrinho()}><RiDeleteBinLine/></button>   
+                                            <button onClick={()=> handlePrint()}><GiConfirmed /></button>     
+                                        </section>
                                     </>
-                                    :''
-                                }
-                        </section>
-                        <section>
-                            {installmentCounter > 2 ?
-                                <>
-                                    <button onClick={()=> menos() }><MdRemove /> X</button>
-                                </>
-                                : ''
-                            }
-                            {installmentCounter > 1 ?
-                                <button onClick={()=> mais() }><MdAdd /> X</button>
-                                :
-                                <button onClick={()=> mais() }> Parcelar <FaCreditCard /></button>
-                            }
-                        </section>
-                        <section>
-                            <button onClick={()=> limparCarrinho()}>Excluir Tudo <RiDeleteBinLine/></button>   
-                            <button onClick={()=> setShopCartScreenPrint(false)}>Finalizar <GiConfirmed /></button>     
-                        </section>   
-                    </SUMMARY_S_C>
+                                :''}
+                            </SHOPP_ORDER_SUMMARY>
+                        </LIST_OF_ITEMS_SHOPP>
+                    </CONTENT_SHOPP>
+                    {buttonOffPrint ? '' :
+                        <button onClick={()=> setButtonOffPrint(true)}><LuMenu /></button>
+                    } 
                 </>
                 :
-                <NO_PRODUCT_IN_S_C> Sem Produtos <BsCartX /></NO_PRODUCT_IN_S_C>
+                    <NO_PRODUCT_IN_SHOPP> Sem Produtos <BsCartX /></NO_PRODUCT_IN_SHOPP>
                 }
-            </CONTAINER_S_C>
-            :
-            <ScreenPrint
-                amount={amount}
-                valueInPix={valueInPix}
-                totalWithInterest={totalWithInterest}
-                installmentCounter={installmentCounter}
-                installmentValue={installmentValue}
-            />
-            }
+            </CONTAINER_SHOPP>
         </>
     )
 

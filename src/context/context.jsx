@@ -27,6 +27,8 @@ export const UseStorage = ({children}) => {
     const [selectValue, setSelectValue] = useState()
     const [selectValuePix, setSelectValuePix] = useState()
     const [selectMeasure, setSelectMeasure] = useState()
+
+    const [buttonOffPrint, setButtonOffPrint] = useState(true)
 //=================================================================================================================//
     const newProducts =  products[[index]].map((it) => {
         return {
@@ -40,7 +42,6 @@ export const UseStorage = ({children}) => {
         }
     })
 //=================================================================================================================//
-
 //=================================================================================================================//
     const formatCurrency = (valor) =>{
         return valor.toLocaleString('pt-br', {
@@ -48,12 +49,23 @@ export const UseStorage = ({children}) => {
         })
     }
 //=================================================================================================================//
-
 //=================================================================================================================//
-    const [shopCartScreenPrint, setShopCartScreenPrint] = useState(true)
+    let timePrint = 1;
+    let checarTimePrint;    
     const contentDocument =useRef()
 
-    const handlePrint = useReactToPrint({
+    const handlePrint = () => {
+        setButtonOffPrint(false)
+        checarTimePrint = setInterval(p, 10);
+        timePrint -- ;
+        function p () {
+            if (timePrint === 0) {
+                clearInterval(checarTimePrint); 
+                print()       
+            }
+        }
+    } 
+    const print = useReactToPrint({
         content: () => contentDocument.current,
     })
 //=================================================================================================================//
@@ -265,8 +277,6 @@ return (
     <UseContext.Provider value={{
         handlePrint,
         contentDocument,
-        shopCartScreenPrint,
-        setShopCartScreenPrint,
         shoppingCart,
         setShoppingCart,
         openShoppingCart,
@@ -287,6 +297,8 @@ return (
         changeId, setChangeId,
         changeCode, setChangeCode,
         changeColor, setChangeColor,
+
+        buttonOffPrint, setButtonOffPrint,
 
         qttItemsShop,
         search,

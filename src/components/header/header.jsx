@@ -29,7 +29,7 @@ function Header () {
     const { openMenu, setOpenMenu, openShoppingCart,
         openProductInformation, setOpenShoppingCart, qttItemsShop,
         emptyCart, search, setSearch, displayAdd, displayRemove,
-        closeProductInformation, message, setShopCartScreenPrint, setIndex
+        closeProductInformation, message, setIndex
     } = useContext(UseContext);
 
 
@@ -44,7 +44,7 @@ function Header () {
                     :''}
                 
                     { openShoppingCart ?
-                        <ButtonMenu onClick={ ()=> {setOpenShoppingCart(false); setShopCartScreenPrint(true)} }><GoX /></ButtonMenu>
+                        <ButtonMenu onClick={ ()=> {setOpenShoppingCart(false)} }><GoX /></ButtonMenu>
                         :
                         openMenu ?
                                 <ButtonMenu onClick={ ()=> setOpenMenu(false) }><GoX /></ButtonMenu>
@@ -104,7 +104,7 @@ function Header () {
                         '':
                             openShoppingCart ?
                                 <>
-                                    <PiShoppingCart onClick={ ()=> {setOpenShoppingCart(false); setShopCartScreenPrint(true)} }/>
+                                    <PiShoppingCart onClick={ ()=> {setOpenShoppingCart(false)} }/>
                                     {emptyCart ?
                                     <span>{qttItemsShop}</span>
                                     :''}

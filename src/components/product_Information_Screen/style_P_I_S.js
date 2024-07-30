@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const CONTAINER_P_I_S = styled.div`
+export const CONTAINER_PAGE_INFO = styled.div`
     position: fixed;
     top: 50px;
     width: 100%;
@@ -14,7 +14,7 @@ export const CONTAINER_P_I_S = styled.div`
     overflow-y: auto;
 `;
 
-export const CLOSE_BUTTON_P_I_S = styled.div`
+export const CLOSE_PRODUCT_INFO = styled.div`
     position: fixed;
     top: 54px;
     display: flex;
@@ -27,7 +27,6 @@ export const CLOSE_BUTTON_P_I_S = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 1px blue solid;
         background-color: #306F96;
         color: #FFFFFF;
         transition: .1s;
@@ -51,9 +50,9 @@ export const CLOSE_BUTTON_P_I_S = styled.div`
             }
     }
 `;
-export const CONTENT_P_I_S = styled.div`
+export const PRODUCT_INFO_CONTAINER = styled.div`
     width: 40%;
-    padding: 20px 0 60px 0;
+    padding: 40px 0 60px 0;
     display: flex;
     flex-direction: column;
     background-color: #FFFFFF;
@@ -79,7 +78,6 @@ export const CONTENT_P_I_S = styled.div`
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px blue solid;
             background-color: #306F96;
             color: #FFFFFF;
             transition: .1s;
@@ -111,71 +109,18 @@ export const CONTENT_P_I_S = styled.div`
         }
     }
 `;
-export const TITLE_P_I_S = styled.div`
-    margin: 30px 0 10px 0;
-    padding-left: 10px;
-    width: 100%;
-    color: #000;
-    font-size: 23px;
-    font-weight: 700;
-    font-style: italic;
-`;
-export const IMG_P_I_S = styled.img`
+export const IMG_PRODUCT_INFO = styled.img`
     width: 100%;
     height: 350px;
 `;
-export const DESCRIPTION_P_I_S = styled.div`
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    color: #000;
+export const TITLE_PRODUCT_INFO = styled.div`
+    margin: 10px 0;
     padding-left: 10px;
-    > h6 {
-        font-size: 17px;
-    }
-    > b {
-        font-size: 18px;
-        height: 25px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-    > div {
-        color: #009F46;
-        font-size: 18px;
-        font-weight: 700;
-        height: 25px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-    > span {
-        color: rgb(80,80,80);
-        font-size: 13px;
-        font-weight: 600;
-        
-    }
-    > section {
-        display: flex;
-        align-items: center;
-        font-weight: 700;
-        font-size: 17px;
-        text-align: center;
-        padding: 6px 0;
-        gap: 5px;
-        > img {
-            width: 200px;
-            height: 15px;
-            border-radius: 6px;
-        }
-    }
-`;
-export const CODE_ID_P_I_S = styled.div`
-    display: flex;
-    gap: 15px;
-    > span {
-        color: rgb(90,90,90);
-    }
+    width: 100%;
+    color: #000;
+    font-size: 17px;
+    font-weight: 700;
+    font-style: italic;
 `;
 export const BUTTON_OPEN_OPTIONS = styled.div`
     width: 100%;
@@ -214,11 +159,47 @@ export const BUTTON_OPEN_OPTIONS = styled.div`
             stroke: blue;
         }
     }
+    @media only screen and (min-device-width : 300px) and (max-device-width : 599px) {
+        > button {
+            width: 80%;
+        }
+    }
 `; 
+export const DESCRIPTION_PRODUCT_INFO = styled.div`
+    display: flex;
+    flex-direction: column;
+    color: #000;
+    padding-left: 10px;
+    > b {
+        font-size: 15px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        
+    }
+    > section {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    > span {
+        color: rgb(80,80,80);
+        font-size: 13px;
+        font-weight: 600;     
+    }
+`;
+export const CODE_ID_PRODUCT_INFO = styled.div`
+    display: flex;
+    gap: 15px;
+    > span {
+        color: rgb(40,40,40);
+        font-weight: 600;
+    }
+`;
 export const OPTION_BUTTONS_CONTAINER = styled.div`
     position: fixed;
     top: 50px;
-    width: 39.55%;
+    width: 40%;
     height: calc(100vh - 50px);
     display: ${props => props.display};
     flex-direction: column;
@@ -228,6 +209,9 @@ export const OPTION_BUTTONS_CONTAINER = styled.div`
     > section {
         width: 100%;
         height: 50%;
+    }
+    @media only screen and (min-device-width : 300px) and (max-device-width : 599px) {
+        width: 100%;
     }
 `;
 export const OPTION_BUTTONS_CONTENT = styled.div`

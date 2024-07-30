@@ -1,19 +1,70 @@
 import styled from "styled-components";
 
-export const CONTAINER_S_C = styled.div`
+export const CONTAINER_SHOPP = styled.div`
     position: fixed;
     top: 50px;
     width: 100%;
     height: calc(100vh - 50px);
-    left: 0;
-    display: ${ props => props.display };
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 0;
-    background-color: #305496;
+    padding: 0 600px;
     box-sizing: border-box;
+    background-color: #305496;
+    display: ${ props => props.display};
+    overflow-y: auto;
+
+    > button {
+        position: fixed;
+        left: calc(50% - 18px);
+        bottom: 75px;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #306F96;
+        color: #FFFFFF;
+        transition: .1s;
+        font-size: 22px;
+        font-weight: 700;
+        font-style: italic;
+        gap: 6px;
+        cursor: pointer;
+        &:hover {
+            background-color: #00468c;
+            color: #ffffff;
+        }
+    }
+    
+    @media only screen and (min-device-width : 300px) and (max-device-width : 599px) {
+        padding: 5px 0;
+    }
+    @media only screen and (min-device-width : 600px) and (max-device-width : 1500px) {
+        padding: 0 300px;
+    }
 `;
-export const NO_PRODUCT_IN_S_C = styled.div`
+export const CONTENT_SHOPP = styled.div`
+    min-height: 100vh;
+    width: 100%;
+    
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    position: relative;
+`;
+export const LIST_OF_ITEMS_SHOPP = styled.div`
+    border: #35DADA solid 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: calc(100vh - 10px);
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #f9f9f5;
+    border-radius: 8px;
+`;
+
+export const NO_PRODUCT_IN_SHOPP = styled.div`
     font-size: 70px;
     font-weight: 900;
     width: 100%;
@@ -31,59 +82,36 @@ export const NO_PRODUCT_IN_S_C = styled.div`
         font-size: 50px;
     }
 `;
-
-export const LIST_ITEMS_S_C = styled.div`
-    background-color: rgb(250,250,240);
-    position: relative;
-    overflow-y: auto;
-    height: calc(100vh - 190px);
-    width: 40%;
-    left: 0;
-    display: ${ props => props.display };
-    flex-direction: column;
-    gap: 5px;
-    padding: 10px 6px;
-    box-sizing: border-box;
-
-    @media only screen and (min-device-width : 300px) and (max-device-width : 599px) {
-        width: 100%;
-    }
-    @media only screen and (min-device-width : 600px) and (max-device-width : 1366px) {
-        width: 50%;
-    }
-`;
-export const ITEM_S_C = styled.div`
-    background-color: #FFFFFF;
+export const SHOPP_PRODUCT_CONTAINER = styled.div`
     width: 100%;
     height: 90px;
-    box-sizing: border-box;
-    border: rgb(40,40,140) .5px solid;
-    color: rgb(40,40,140);
     display: flex;
-    border-radius: 6px;
-    gap: 5px;
-    transition: .5s;
+    color: #000000;
+    border-bottom: 1px solid #00468c;
     > img {
-        width: 15%;
+        width: 17%;
         height: 100%;
         border-radius: 10px;
-        padding: 7px;
+        padding: 2px;
         box-sizing: border-box;
     }
  @media only screen and (min-device-width : 300px) and (max-device-width : 599px) {
-    > section {
-        width: 22%;
+    > img {
+        width: 25%;
+        height: 100%;
+        border-radius: 10px;
+        padding: 2px;
+        box-sizing: border-box;
     }
  }
 `;
-export const DESCRIPTION_S_C= styled.div`
+export const DESCRIPTION_PRODUCT_SHOPP= styled.div`
     width: 70%;
     display: flex;
     flex-direction: column;
     gap: 1.5px;
-
     >section {
-        font-size: 12.5px;
+        font-size: 12px;
         font-weight: 700;
         width: 100%;
         padding-left: 6px;
@@ -91,14 +119,14 @@ export const DESCRIPTION_S_C= styled.div`
         align-items: center;
         gap: 8px;
         > div {
-            color: #000;
+            color: #00468c;
         }
         > span {
             display: flex;
             gap: 4px;
             width: 40%;
             > div {
-                color: #000;
+                color: #00468c;
             }
         }
         > img {
@@ -117,7 +145,6 @@ export const DESCRIPTION_S_C= styled.div`
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border: 1px blue solid;
                 background-color: #306F96;
                 color: #FFFFFF;
                 transition: .1s;
@@ -167,9 +194,11 @@ export const DESCRIPTION_S_C= styled.div`
         }
     }
 `;
-export const SUMMARY_S_C = styled.div`
-    width: 40%;
+export const SHOPP_ORDER_SUMMARY = styled.div`
+    width: 100%;
     height: 190px;
+    margin-top: auto;
+    margin-bottom: 0;
     display: flex;
     flex-direction: column;
     background-color: #FFFFFF;
@@ -177,6 +206,12 @@ export const SUMMARY_S_C = styled.div`
     color: #000;
     font-weight: 700;
     font-size: 16px;
+    > b {
+        width: 100%;
+        text-align: center;
+        font-size: 17px;
+        color: #ff00ff;
+    }
     > section {
         display: flex;
         justify-content: center;
@@ -184,39 +219,43 @@ export const SUMMARY_S_C = styled.div`
         width: 100%;
         gap: 8px;
         > section {
-            color: ${props => props.color};
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
         }
         > svg {
             margin-top: 2px;
         }
         > button {
-            margin: 3px 0;
             border: none;
-            height: 17px;
-            padding: 0 10px;
-            border-radius: 6px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px blue solid;
             background-color: #306F96;
             color: #FFFFFF;
             transition: .1s;
-            font-size: 13px;
+            font-size: 22px;
             font-weight: 700;
+            font-style: italic;
             gap: 6px;
             cursor: pointer;
-            > svg {
-                width: 20px;
-                height: 15px;
-            }
             &:hover {
                 background-color: #00468c;
+                color: #ffffff;
             }
         }
     }
     @media only screen and (min-device-width : 300px) and (max-device-width : 599px) {
         width: 100%;
+        > button {
+            &:hover {
+                background-color: #306F96;
+            }
+        }
         > section {
             > button {
                 &:hover {
